@@ -1,4 +1,4 @@
-package com.namct.reddit.auth.token;
+package com.namct.reddit.auth.token.verification;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.namct.reddit.auth.token;
+package com.namct.reddit.auth.token.verification;
 
 import java.util.Optional;
 

@@ -10,9 +10,7 @@ import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -22,8 +20,6 @@ import java.time.Instant;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 public class UserModel {
     @Id
     @GeneratedValue(strategy = SEQUENCE)
@@ -42,5 +38,10 @@ public class UserModel {
     private Instant created;
 
     @Column(columnDefinition = "boolean default false")
-    private boolean enabled = false;
+    private boolean enabled;
+
+	public boolean getEnabled() {
+		return this.enabled;
+	}
+    
 } 
