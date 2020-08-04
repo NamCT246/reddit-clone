@@ -34,7 +34,7 @@ public class LoginService {
         return new AuthResponse(authenticationToken, loginParams.getUsername());
     }
 
-    public UserModel getLoggedInUser() {
+    public UserModel getCurrentLoggedInUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         return userRepository.findByUsername(principal.getUsername())

@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<PostModel, Long> {
     List<PostModel> findByUser(UserModel user);
-    List<PostModel> findBySubreddit(SubRedditModel subreddit);
+    List<PostModel> findBySubReddit(SubRedditModel subReddit);
 }

@@ -44,12 +44,12 @@ public class PostModel {
     private Integer voteCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private UserModel user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private SubRedditModel subreddit;
+    @JoinColumn(name = "subreddit_id", referencedColumnName = "id")
+    private SubRedditModel subReddit;
 
     private Instant createdAt;
 } 
