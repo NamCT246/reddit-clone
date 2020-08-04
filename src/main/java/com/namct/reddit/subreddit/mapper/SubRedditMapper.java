@@ -5,6 +5,7 @@ import java.util.List;
 import com.namct.reddit.post.PostModel;
 import com.namct.reddit.subreddit.SubRedditModel;
 import com.namct.reddit.subreddit.dto.SubRedditDto;
+import com.namct.reddit.users.UserModel;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -22,5 +23,6 @@ public interface SubRedditMapper {
 
     @InheritInverseConfiguration
     @Mapping(target = "posts", ignore = true)
-    SubRedditModel mapToSubRedditModel(SubRedditDto subredditDto);
+    @Mapping(target = "createdAt", expression = "java(java.time.Instant.now())")
+    SubRedditModel mapToSubRedditModel(SubRedditDto subredditDto, UserModel user);
 }

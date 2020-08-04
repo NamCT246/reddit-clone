@@ -35,12 +35,12 @@ public class PostController {
     }
 
     @GetMapping("by-user/{userId}")
-    public List<PostResponseDto> getPostsByUser(@PathVariable Long id) {
-        return postService.getPostsByUser(id);
+    public List<PostResponseDto> getPostsByUser(@PathVariable Long userId) {
+        return postService.getPostsByUser(userId);
     }
 
-    @GetMapping("by-subreddit/{id}")
-    public List<PostResponseDto> getPostsBySubReddit(@PathVariable Long id) {
-        return postService.getPostsBySubReddit(id);
+    @GetMapping("by-subreddit/{subRedditId}")
+    public List<PostResponseDto> getPostsBySubReddit(@PathVariable Long subRedditId) {
+        return postService.getPostsBySubReddit(subRedditId);
     }
 }

@@ -12,6 +12,8 @@ import com.namct.reddit.post.dto.PostResponseDto;
 import com.namct.reddit.post.mapper.PostMapper;
 import com.namct.reddit.subreddit.SubRedditModel;
 import com.namct.reddit.subreddit.SubRedditRepository;
+import com.namct.reddit.users.UserModel;
+import com.namct.reddit.users.UserRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 
 import static java.time.Instant.now;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +29,7 @@ public class PostService {
 
 	private SubRedditRepository subRedditRepository;
 	private PostRepository postRepository;
+	private UserRepository userRepository;
 	private PostMapper postMapper;
 	private LoginService loginService;
 
@@ -39,17 +43,29 @@ public class PostService {
 
 	@Transactional
 	public void create(PostRequestDto postRequestDto) {
-		SubRedditModel subReddit = subRedditRepository.findByName(postRequestDto.getSubRedditName()).orElseThrow(() -> new BaseException("Post need to be in a sub reddit"));
+		SubRedditModel subReddit = subRedditRepository.findByName(postRequestDto.getSubRedditName())
+				.orElseThrow(() -> new BaseException("Post need to be in a sub reddit"));
 
-		postRepository.save(postMapper.mapToPostModel(postRequestDto, subReddit, loginService.getCurrentLoggedInUser()));
+		postRepository
+				.save(postMapper.mapToPostModel(postRequestDto, subReddit, loginService.getCurrentLoggedInUser()));
 	}
 
-	public List<PostResponseDto> getPostsByUser(Long id) {
-		return null;
+	@Transactional(readOnly = true)
+	public List<PostResponseDto> getPostsByUser(Long userId) {
+		UserModel user = userRepository.findById(userId).orElseThrow(() -> new BaseException("No user found"));
+
+		List<PostModel> posts = postRepository.findByUser(user);
+
+		return posts.stream().map(postMapper::mapToPostResponseDto).collect(toList());
 	}
 
-	public List<PostResponseDto> getPostsBySubReddit(Long id) {
-		return null;
+	@Transactional(readOnly = true)
+	public List<PostResponseDto> getPostsBySubReddit(Long subRedditId) {
+		SubRedditModel subReddit = subRedditRepository.findById(subRedditId).orElseThrow(() -> new BaseException("Can't find that sub reddit"));
+
+		List<PostModel> posts = postRepository.findAllBySubReddit(subReddit);
+
+		return posts.stream().map(postMapper::mapToPostResponseDto).collect(toList());
 	}
 
 }
