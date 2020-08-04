@@ -34,22 +34,6 @@ public class SubRedditService {
         return subRedditDto;
     }
 
-    // private SubRedditModel mapToSubRedditModel(SubRedditDto subRedditDto) {
-
-    //     return SubRedditModel.builder()
-    //             .name("r/" + subRedditDto.getName())
-    //             .description(subRedditDto.getDescription())
-    //             .user(loginService.getLoggedInUser())
-    //             .createdAt(now())
-    //             .build();
-    // }
-
-    // private SubRedditDto mapToSubRedditDto(SubRedditModel subReddit) {
-    //     return SubRedditDto.builder().id(subReddit.getId()).name(subReddit.getName())
-    //             .postCount(subReddit.getPosts().size()).build();
-
-    // }
-
     // TODO: Update isExist abstraction
     private boolean isSubRedditExist(String subRedditName) {
         return false;
