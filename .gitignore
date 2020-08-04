@@ -12,8 +12,8 @@ target/
 .settings
 .springBeans
 .sts4-cache
-application.properties
-reddit.jks
+src/main/resources/application.properties
+src/main/resources/reddit.jks
 
 ### IntelliJ IDEA ###
 .idea
