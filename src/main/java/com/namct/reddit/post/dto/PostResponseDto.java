@@ -16,7 +16,7 @@ public class PostResponseDto {
     private String subRedditName;
     private Integer voteCount;
     private Integer commentCount;
-    // private String duration;
+    private String duration;
     private boolean upVote;
     private boolean downVote;
 }

@@ -18,6 +18,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
+
 import lombok.AllArgsConstructor;
 
 @Mapper(componentModel = "spring")
@@ -34,7 +36,7 @@ public abstract class PostMapper {
     @Mapping(target = "userName", source = "user.username")
     @Mapping(target = "subRedditName", source = "subReddit.name")
     @Mapping(target = "commentCount", expression = "java(getCommentCount(post))")
-    // @Mapping(target = "duration", expression = "java(getDuration())")
+    @Mapping(target = "duration", expression = "java(getDuration(post))")
     @Mapping(target = "upVote", expression = "java(isUpVoted(post))")
     @Mapping(target = "downVote", expression = "java(isDownVoted(post))")
     public abstract PostResponseDto mapToPostResponseDto(PostModel post);
@@ -66,5 +68,9 @@ public abstract class PostMapper {
         }
 
         return false;
+    }
+
+    String getDuration(PostModel post) {
+        return TimeAgo.using(post.getCreatedAt().toEpochMilli());
     }
 }

@@ -6,6 +6,7 @@ import com.namct.reddit.auth.token.jwt.JwtProvider;
 import com.namct.reddit.users.UserModel;
 import com.namct.reddit.users.UserRepository;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +42,8 @@ public class LoginService {
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
 
-	public boolean isLoggedIn() {
-		return false;
-	}
+    public boolean isLoggedIn() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+    }
 }
