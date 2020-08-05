@@ -3,6 +3,7 @@ package com.namct.reddit.vote;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,13 +14,11 @@ import com.namct.reddit.users.UserModel;
 
 import lombok.Data;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 @Data
 @Entity
 public class VoteModel {
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voteId;
 
     private VoteType voteType;

@@ -1,7 +1,6 @@
 package com.namct.reddit.post.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.namct.reddit.auth.service.LoginService;
 import com.namct.reddit.exceptions.BaseException;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 
-import static java.time.Instant.now;
 import static java.util.stream.Collectors.toList;
 
 @Service

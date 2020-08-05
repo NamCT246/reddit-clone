@@ -3,6 +3,7 @@ package com.namct.reddit.post;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,8 +19,6 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.time.Instant;
 
 @Data
@@ -29,7 +28,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class PostModel {
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
     @NotBlank(message = "Title is required")

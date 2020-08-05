@@ -34,11 +34,12 @@ public class RegisterService {
     private MailContentBuilder mailContentBuilder;
     private MailService mailService;
 
+    // TODO: need signup response dto for handling case where user existed.
     @Transactional
     public void signup(Register register) {
-        // if(isUserExists(register.getEmail(), register.getUsername())) {
-        // return;
-        // };
+        if (isUserExists(register.getEmail(), register.getUsername())) {
+            return;
+        }
 
         UserModel user = new UserModel();
 
@@ -76,7 +77,7 @@ public class RegisterService {
 
     private boolean isUserExists(String email, String username) {
         if (userRepository.existsByEmail(email) || userRepository.existsByUsername(username)) {
-            throw new BaseException("User already exists");
+            return true;
         }
 
         return false;

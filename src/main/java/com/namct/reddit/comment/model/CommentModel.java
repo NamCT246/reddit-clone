@@ -1,8 +1,9 @@
-package com.namct.reddit.comment;
+package com.namct.reddit.comment.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,8 +17,6 @@ import lombok.NoArgsConstructor;
 import com.namct.reddit.post.PostModel;
 import com.namct.reddit.users.UserModel;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.time.Instant;
 
 @Data
@@ -26,13 +25,13 @@ import java.time.Instant;
 @Entity
 public class CommentModel {
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
     @NotBlank
     private String text;
 
-    private Instant createdDate;
+    private Instant createdAt;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

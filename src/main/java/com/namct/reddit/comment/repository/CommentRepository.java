@@ -1,7 +1,8 @@
-package com.namct.reddit.comment;
+package com.namct.reddit.comment.repository;
 
 import java.util.List;
 
+import com.namct.reddit.comment.model.CommentModel;
 import com.namct.reddit.post.PostModel;
 import com.namct.reddit.users.UserModel;
 

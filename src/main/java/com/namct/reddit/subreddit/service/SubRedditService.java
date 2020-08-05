@@ -1,12 +1,12 @@
 package com.namct.reddit.subreddit.service;
 
 import com.namct.reddit.auth.service.LoginService;
+import com.namct.reddit.exceptions.BaseException;
 import com.namct.reddit.subreddit.SubRedditModel;
 import com.namct.reddit.subreddit.SubRedditRepository;
 import com.namct.reddit.subreddit.dto.SubRedditDto;
 import com.namct.reddit.subreddit.exceptions.SubRedditException;
 import com.namct.reddit.subreddit.mapper.SubRedditMapper;
-import com.namct.reddit.users.UserModel;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +29,12 @@ public class SubRedditService {
 
     @Transactional
     public SubRedditDto create(SubRedditDto subRedditDto) {
+        if (subRedditRepository.existsByName(subRedditDto.getName())) {
+            throw new BaseException("Subreddit already exist");
+        }
         SubRedditModel subReddit = subRedditRepository.save(subRedditMapper.mapToSubRedditModel(subRedditDto,  loginService.getCurrentLoggedInUser())); 
         subRedditDto.setId(subReddit.getId());
 
         return subRedditDto;
-    }
-
-    // TODO: Update isExist abstraction
-    private boolean isSubRedditExist(String subRedditName) {
-        return false;
     }
 }

@@ -27,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SubRedditModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Name is required")

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubRedditRepository extends JpaRepository<SubRedditModel, Long> {
     Optional<SubRedditModel> findByName(String subRedditName);
+
+	boolean existsByName(String name);
 }

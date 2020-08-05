@@ -3,6 +3,7 @@ package com.namct.reddit.users;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,8 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.time.Instant;
 
 @Data
@@ -22,7 +21,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class UserModel {
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     @Email
