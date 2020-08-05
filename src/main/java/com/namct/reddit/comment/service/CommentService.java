@@ -42,11 +42,10 @@ public class CommentService {
                 .orElseThrow(() -> new BaseException("Post does not exist"));
 
         return commentRepository.findByPost(post)
-        .stream()
-        .map(
-            commentMapper::mapToCommentDto
-            )
-        .collect(toList());
-        
+                        .stream()
+                        .map(
+                            commentMapper::mapToCommentDto
+                            )
+                        .collect(toList());            
     }
 }

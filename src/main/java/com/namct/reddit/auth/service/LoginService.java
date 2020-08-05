@@ -40,4 +40,8 @@ public class LoginService {
         return userRepository.findByUsername(principal.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
+
+	public boolean isLoggedIn() {
+		return false;
+	}
 }

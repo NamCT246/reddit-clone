@@ -1,4 +1,4 @@
-package com.namct.reddit.vote;
+package com.namct.reddit.vote.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,11 +11,18 @@ import javax.validation.constraints.NotNull;
 
 import com.namct.reddit.post.PostModel;
 import com.namct.reddit.users.UserModel;
+import com.namct.reddit.vote.VoteType;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class VoteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
