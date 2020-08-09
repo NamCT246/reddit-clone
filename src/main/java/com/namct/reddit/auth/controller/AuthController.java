@@ -2,10 +2,14 @@ package com.namct.reddit.auth.controller;
 
 import lombok.AllArgsConstructor;
 
+import javax.validation.Valid;
+
 import com.namct.reddit.auth.dto.AuthResponse;
 import com.namct.reddit.auth.dto.Login;
 import com.namct.reddit.auth.dto.Register;
 import com.namct.reddit.auth.service.RegisterService;
+import com.namct.reddit.auth.token.refreshToken.RefreshTokenRequest;
+import com.namct.reddit.auth.token.refreshToken.RefreshTokenService;
 import com.namct.reddit.auth.service.LoginService;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +28,7 @@ public class AuthController {
 
     private RegisterService registerService;
     private LoginService loginService;
+    private RefreshTokenService refreshTokenService;
 
     /**
      * TODO: Currently no handling for existed user. 
@@ -46,4 +51,17 @@ public class AuthController {
         return loginService.login(loginData);
     }
 
+    // Whenever JWT expired, request to check the refresh token is valid, then return the new JWT and a new refresh token
+    @PostMapping("/refreshtoken")
+    public AuthResponse refreshTokenResponse(@Valid @RequestBody RefreshTokenRequest token) {
+        return loginService.validateRefreshToken(token);
+    }
+
+    // Whenever user logged out, refresh token should be deleted
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest token) {
+        refreshTokenService.deleteToken(token.getRefreshToken());
+
+        return new ResponseEntity<>("Refresh token deleted.", HttpStatus.OK);
+    }
 }

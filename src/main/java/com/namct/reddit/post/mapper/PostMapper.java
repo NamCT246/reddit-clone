@@ -57,7 +57,7 @@ public abstract class PostMapper {
     }
 
     boolean isDownVoted(PostModel post) {
-        return isPostUpvoted(post, VoteType.DOWNVOTE);
+        return !isPostUpvoted(post, VoteType.DOWNVOTE);
     }
 
     private boolean isPostUpvoted(PostModel post, VoteType voteType) {

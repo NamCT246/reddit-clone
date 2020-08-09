@@ -8,12 +8,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Date;
 import java.io.IOException;
+
+import static java.time.Instant.now;
 
 import javax.annotation.PostConstruct;
 
 import com.namct.reddit.exceptions.BaseException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,9 @@ import static io.jsonwebtoken.Jwts.parser;
 public class JwtProvider {
 
     private KeyStore keyStore;
+
+    @Value("${jwt.expiration.time}")
+    private Long tokenExpirationInMillis;
 
     @PostConstruct
     public void init() {
@@ -43,7 +50,21 @@ public class JwtProvider {
     public String generateToken(Authentication authenticate) {
         User principal = (User) authenticate.getPrincipal();
 
-        return Jwts.builder().setSubject(principal.getUsername()).signWith(getPrivateKey()).compact();
+        return Jwts.builder().setSubject(principal.getUsername()).setIssuedAt(Date.from(now()))
+                .signWith(getPrivateKey()).setExpiration(Date.from(now().plusMillis(tokenExpirationInMillis)))
+                .compact();
+    }
+
+    /**
+     * As user context is not valid anymore, this function allows generate a new JWT
+     * based on username
+     * 
+     * @param authenticate
+     * @return
+     */
+    public String generateTokenFromUsername(String username) {
+        return Jwts.builder().setSubject(username).setIssuedAt(Date.from(now())).signWith(getPrivateKey())
+                .setExpiration(Date.from(now().plusMillis(tokenExpirationInMillis))).compact();
     }
 
     private PrivateKey getPrivateKey() {
@@ -73,5 +94,9 @@ public class JwtProvider {
     public boolean validateToken(String jwt) {
         parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
         return true;
+    }
+
+    public Long getTokenExpirationInMillis() {
+        return tokenExpirationInMillis;
     }
 }
