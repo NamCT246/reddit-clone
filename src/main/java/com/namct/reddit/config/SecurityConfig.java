@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
-	private JwtRequestFilter jwtRequestFilter;
+    private JwtRequestFilter jwtRequestFilter;
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -33,19 +33,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Configure AuthenticationManager so that it knows from where to load
-     * user for matching credentials
+     * Configure AuthenticationManager so that it knows from where to load user for matching
+     * credentials
      */
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-    
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder)
+            throws Exception {
+
+        authenticationManagerBuilder.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests().antMatchers("/api/auth/**").permitAll().anyRequest()
-                .authenticated();
+        httpSecurity.csrf().disable().authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/v2/api-docs", "configuration/ui", "/swagger-resources/**",
+                        "/configuration/security", "/swagger-ui.html", "/webjars/**")
+                .permitAll().anyRequest().authenticated();
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
