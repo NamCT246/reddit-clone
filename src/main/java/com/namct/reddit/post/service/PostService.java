@@ -33,8 +33,8 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public PostResponseDto getPost(Long id) {
-		PostModel post = postRepository.findById(id)
-				.orElseThrow(() -> new BaseException("Post not found, deleted or have never been created -" + id));
+		PostModel post = postRepository.findById(id).orElseThrow(() -> new BaseException(
+				"Post not found, deleted or have never been created -" + id));
 
 		return postMapper.mapToPostResponseDto(post);
 	}
@@ -44,13 +44,14 @@ public class PostService {
 		SubRedditModel subReddit = subRedditRepository.findByName(postRequestDto.getSubRedditName())
 				.orElseThrow(() -> new BaseException("Post need to be in a sub reddit"));
 
-		postRepository
-				.save(postMapper.mapToPostModel(postRequestDto, subReddit, loginService.getCurrentLoggedInUser()));
+		postRepository.save(postMapper.mapToPostModel(postRequestDto, subReddit,
+				loginService.getCurrentLoggedInUser()));
 	}
 
 	@Transactional(readOnly = true)
-	public List<PostResponseDto> getPostsByUser(Long userId) {
-		UserModel user = userRepository.findById(userId).orElseThrow(() -> new BaseException("No user found"));
+	public List<PostResponseDto> getPostsByUser(String username) {
+		UserModel user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new BaseException("No user found"));
 
 		List<PostModel> posts = postRepository.findByUser(user);
 
@@ -59,7 +60,8 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public List<PostResponseDto> getPostsBySubReddit(Long subRedditId) {
-		SubRedditModel subReddit = subRedditRepository.findById(subRedditId).orElseThrow(() -> new BaseException("Can't find that sub reddit"));
+		SubRedditModel subReddit = subRedditRepository.findById(subRedditId)
+				.orElseThrow(() -> new BaseException("Can't find that sub reddit"));
 
 		List<PostModel> posts = postRepository.findAllBySubReddit(subReddit);
 

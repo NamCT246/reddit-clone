@@ -34,9 +34,9 @@ public class PostController {
         return new ResponseEntity<>("Successfully created post", HttpStatus.CREATED);
     }
 
-    @GetMapping("by-user/{userId}")
-    public List<PostResponseDto> getPostsByUser(@PathVariable Long userId) {
-        return postService.getPostsByUser(userId);
+    @GetMapping("by-user/{username}")
+    public List<PostResponseDto> getPostsByUser(@PathVariable String username) {
+        return postService.getPostsByUser(username);
     }
 
     @GetMapping("by-subreddit/{subRedditId}")

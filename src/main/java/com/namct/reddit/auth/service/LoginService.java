@@ -35,40 +35,43 @@ public class LoginService {
     // TODO: add username type check so user can login with email or username
     public AuthResponse login(Login loginParams) {
 
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginParams.getUsername(), loginParams.getPassword()));
+        Authentication authenticate =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        loginParams.getUsername(), loginParams.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String authenticationToken = jwtProvider.generateToken(authenticate);
 
-        return AuthResponse.builder()
-            .authenticationToken(authenticationToken)
-            .refreshToken(refreshTokenService.generateAndSaveToken().getToken())
-            .expiredAt(now().plusMillis(jwtProvider.getTokenExpirationInMillis()))
-            .username(loginParams.getUsername())
-            .build();
+        System.out.println("when login: " + authenticationToken);
+
+        return AuthResponse.builder().authenticationToken(authenticationToken)
+                .refreshToken(refreshTokenService.generateAndSaveToken().getToken())
+                .expiredAt(now().plusMillis(jwtProvider.getTokenExpirationInMillis()))
+                .username(loginParams.getUsername()).build();
     }
 
     public UserModel getCurrentLoggedInUser() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
+        org.springframework.security.core.userdetails.User principal =
+                (org.springframework.security.core.userdetails.User) SecurityContextHolder
+                        .getContext().getAuthentication().getPrincipal();
         return userRepository.findByUsername(principal.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "User name not found - " + principal.getUsername()));
     }
 
     public boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+        return !(authentication instanceof AnonymousAuthenticationToken)
+                && authentication.isAuthenticated();
     }
 
-	public AuthResponse validateRefreshToken(RefreshTokenRequest token) {
-       refreshTokenService.validateToken(token.getRefreshToken());
+    public AuthResponse validateRefreshToken(RefreshTokenRequest token) {
+        refreshTokenService.validateToken(token.getRefreshToken());
 
         return AuthResponse.builder()
-            .authenticationToken(jwtProvider.generateTokenFromUsername(token.getUsername()))
-            .refreshToken(token.getRefreshToken())
-            .expiredAt(now().plusMillis(jwtProvider.getTokenExpirationInMillis()))
-            .username(token.getUsername())
-            .build();
-	}
+                .authenticationToken(jwtProvider.generateTokenFromUsername(token.getUsername()))
+                .refreshToken(token.getRefreshToken())
+                .expiredAt(now().plusMillis(jwtProvider.getTokenExpirationInMillis()))
+                .username(token.getUsername()).build();
+    }
 }
