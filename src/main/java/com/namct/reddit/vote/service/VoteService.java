@@ -49,7 +49,8 @@ public class VoteService {
     }
 
     private boolean isVoteNotDuplicated(VoteDto voteDto, PostModel post) {
-        Optional<VoteModel> vote = voteRepository.findByUserAndPost(loginService.getCurrentLoggedInUser(), post);
+        Optional<VoteModel> vote =
+                voteRepository.findByUserAndPost(loginService.getCurrentLoggedInUser(), post);
 
         return vote.isPresent() && vote.get().getVoteType().equals(voteDto.getVoteType());
     }
