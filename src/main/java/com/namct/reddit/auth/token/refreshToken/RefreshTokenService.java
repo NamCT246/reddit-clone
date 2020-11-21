@@ -12,12 +12,12 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class RefreshTokenService  {
+public class RefreshTokenService {
 
     private RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public RefreshToken generateAndSaveToken () {
+    public RefreshToken generateAndSaveToken() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken.setCreatedAt(Instant.now());
@@ -26,9 +26,11 @@ public class RefreshTokenService  {
     }
 
     public void validateToken(String token) {
-        refreshTokenRepository.findByToken(token).orElseThrow(() -> new BaseException("Invalid refresh token"));
+        refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new BaseException("Invalid refresh token"));
     }
 
+    @Transactional
     public void deleteToken(String token) {
         refreshTokenRepository.deleteByToken(token);
     }

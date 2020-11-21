@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.namct.reddit.users.UserModel;
@@ -25,6 +26,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "subreddit")
 public class SubRedditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

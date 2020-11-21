@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.namct.reddit.subreddit.SubRedditModel;
@@ -26,6 +27,7 @@ import java.time.Instant;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "post")
 public class PostModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +53,4 @@ public class PostModel {
     private SubRedditModel subReddit;
 
     private Instant createdAt;
-} 
+}

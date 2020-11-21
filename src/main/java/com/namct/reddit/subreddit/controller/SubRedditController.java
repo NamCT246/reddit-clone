@@ -30,6 +30,10 @@ public class SubRedditController {
     @PostMapping("/create")
     public SubRedditDto create(@RequestBody @Valid SubRedditDto subredditDto) {
         return subRedditService.create(subredditDto);
-        
+    }
+
+    @GetMapping("/featured")
+    public SubRedditDto getFeaturedSubReddit() {
+        return subRedditService.getFeaturedSubReddit();
     }
 }

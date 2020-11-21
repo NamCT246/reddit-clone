@@ -32,9 +32,15 @@ public class SubRedditService {
         if (subRedditRepository.existsByName(subRedditDto.getName())) {
             throw new BaseException("Subreddit already exist");
         }
-        SubRedditModel subReddit = subRedditRepository.save(subRedditMapper.mapToSubRedditModel(subRedditDto,  loginService.getCurrentLoggedInUser())); 
+        SubRedditModel subReddit = subRedditRepository.save(subRedditMapper
+                .mapToSubRedditModel(subRedditDto, loginService.getCurrentLoggedInUser()));
         subRedditDto.setId(subReddit.getId());
 
         return subRedditDto;
+    }
+
+    // TODO: create new table to save featured subreddit
+    public SubRedditDto getFeaturedSubReddit() {
+        return null;
     }
 }

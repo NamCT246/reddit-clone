@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -19,6 +20,7 @@ import java.time.Instant;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "r_user")
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,7 @@ public class UserModel {
 
     @NotBlank(message = "Username is required")
     private String username;
-    
+
     @NotBlank(message = "Password is required")
     private String password;
 
@@ -39,8 +41,8 @@ public class UserModel {
     @Column(columnDefinition = "boolean default false")
     private boolean enabled;
 
-	public boolean getEnabled() {
-		return this.enabled;
-	}
-    
-} 
+    public boolean getEnabled() {
+        return this.enabled;
+    }
+
+}

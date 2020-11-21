@@ -5,7 +5,6 @@ import com.namct.reddit.auth.service.LoginService;
 import com.namct.reddit.exceptions.BaseException;
 import com.namct.reddit.post.PostModel;
 import com.namct.reddit.post.PostRepository;
-import com.namct.reddit.users.UserModel;
 import com.namct.reddit.vote.dto.VoteDto;
 import com.namct.reddit.vote.model.VoteModel;
 

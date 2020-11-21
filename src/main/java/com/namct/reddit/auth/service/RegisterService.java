@@ -55,8 +55,8 @@ public class RegisterService {
                 "Please click on the below url to activate your account on  : " + ACTIVATION_EMAIL_API + "/" + token,
                 "signup-template");
 
-        mailService.sendMail(
-                new NotificationEmail("Please activate the account via link in email", user.getEmail(), message));
+        // mailService.sendMail(
+        //         new NotificationEmail("Please activate the account via link in email", user.getEmail(), message));
     }
 
     public void verifyAccount(String token) {
