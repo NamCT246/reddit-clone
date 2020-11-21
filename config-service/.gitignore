@@ -12,8 +12,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-src/main/resources/application.properties
-src/main/resources/reddit.jks
 
 ### IntelliJ IDEA ###
 .idea
@@ -33,4 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-reddit.code-workspace
