@@ -1,6 +1,5 @@
 package com.namct.reddit.auth.service;
 
-import com.namct.reddit.auth.dto.Login;
 import com.namct.reddit.auth.dto.Register;
 import com.namct.reddit.auth.token.verification.VerificationToken;
 import com.namct.reddit.auth.token.verification.VerificationTokenRepository;
@@ -51,12 +50,12 @@ public class RegisterService {
         userRepository.save(user);
 
         String token = generateVerificationToken(user);
-        String message = mailContentBuilder.build(
-                "Please click on the below url to activate your account on  : " + ACTIVATION_EMAIL_API + "/" + token,
-                "signup-template");
+        String message = mailContentBuilder
+                .build("Please click on the below url to activate your account on  : "
+                        + ACTIVATION_EMAIL_API + "/" + token, "signup-template");
 
-        // mailService.sendMail(
-        //         new NotificationEmail("Please activate the account via link in email", user.getEmail(), message));
+        mailService.sendMail(new NotificationEmail("Please activate the account via link in email",
+                user.getEmail(), message));
     }
 
     public void verifyAccount(String token) {
@@ -68,8 +67,8 @@ public class RegisterService {
 
     private void verifyUser(VerificationToken token) {
         String username = token.getUser().getUsername();
-        UserModel user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new BaseException("No user found with this username: " + username));
+        UserModel user = userRepository.findByUsername(username).orElseThrow(
+                () -> new BaseException("No user found with this username: " + username));
 
         user.setEnabled(true);
         userRepository.save(user);

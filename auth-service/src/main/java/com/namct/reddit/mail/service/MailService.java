@@ -28,14 +28,16 @@ public class MailService {
             messageHelper.setFrom("tester.reddit@gmail.com");
             messageHelper.setTo(notificationEmail.getRecipient());
             messageHelper.setSubject(notificationEmail.getSubject());
-            messageHelper.setText(mailContentBuilder.build(notificationEmail.getBody(), "signup-template"), true);
+            messageHelper.setText(
+                    mailContentBuilder.build(notificationEmail.getBody(), "signup-template"), true);
         };
         try {
             mailSender.send(messagePreparator);
             log.info("Activation email sent to email: " + notificationEmail.getRecipient());
         } catch (MailException e) {
             throw new BaseException(
-                    "Exception occurred when sending mail to " + notificationEmail.getRecipient(), e);
+                    "Exception occurred when sending mail to " + notificationEmail.getRecipient(),
+                    e);
         }
     }
 }
